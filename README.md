@@ -93,7 +93,7 @@ variable "each_vm" {
 
 ### Решение
 
-1. Создаем файл [disk_vm.tf](/src/fdisk_vm.tf), с его помощью будут созданы 3 диска:
+1. Создаем файл [disk_vm.tf](/src/disk_vm.tf), с его помощью будут созданы 3 диска:
 
 ![screen](screenshots/6.png)
 
