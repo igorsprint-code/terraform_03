@@ -101,7 +101,7 @@ variable "each_vm" {
 
 ![screen](screenshots/7.png)
 
-2. Создаем в [disk_vm.tf](/src/fdisk_vm.tf) ВМ c именем "storage", к ней будут подключены три созданных диска:
+2. Создаем в [disk_vm.tf](/src/disk_vm.tf) ВМ c именем "storage", к ней будут подключены три созданных диска:
 
 ![screen](screenshots/8.png)
 
