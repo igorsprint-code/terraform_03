@@ -36,15 +36,144 @@ variable "vms_ssh_root_key" {
   default = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMaMfRP37QFfTzysjQiIPsYlU78MBbr53uyxa0S5y1Cf igor@igor-VirtualBox"
 }
 
+variable "image" {
+  type = string
+  default = "ubuntu-2004-lts"  
+}
+
+
+### web_vars
+
+variable "web_count" {
+  type    = number
+  default = 2
+}
+
+variable "vm_web_name" {
+  type    = string
+  default = "netology-develop-platform-web"
+}
+
+variable "vm_web_platform" {
+  type    = string
+  default = "standard-v4a"
+}
+
+variable "vm_web_preemptible" {
+  type    = bool
+  default = true
+}
+
+variable "vm_web_nat" {
+  type    = bool
+  default = true
+}
+
+### db_vars
+
+variable "vm_db_name" {
+  type    = string
+  default = "netology-develop-platform-db"
+}
+
+
+variable "vm_db_preemptible" {
+  type    = bool
+  default = true
+}
+
+variable "vm_db_nat" {
+  type    = bool
+  default = true
+}
+
+### disk_vars
+
+variable "disk_count" {
+  type    = number
+  default = 3
+}
+
+variable "disk_name" {
+  type    = string
+  default = "disk"
+}
+
+variable "disk_size" {
+  type    = number
+  default = 1
+}
+
+variable "disk_type" {
+  type = string
+  default = "network-ssd"
+}
+
+### storage_vars
+
+variable "storage_count" {
+  type    = number
+  default = 1
+}
+
+variable "storage_name" {
+  type = string
+  default = "netology-develop-platform-storage"
+}
+
+variable "storage_platform" {
+  type    = string
+  default = "standard-v4a"
+}
+
+variable "storage_disk_type" {
+  type = string
+  default = "network-ssd"
+}
+
+variable "storage_preemptible" {
+  type    = bool
+  default = true
+}
+
+variable "storage_nat" {
+  type    = bool
+  default = true
+}
+
+
+### vms_resources
+
+variable "vms_resources" {
+  type = map(object({
+    cores         = number
+    memory        = number
+    core_fraction = number
+  }))
+  default = {
+    web = {
+      cores         = 2
+      memory        = 2
+      core_fraction = 20
+    }
+    storage = {
+      cores         = 2
+      memory        = 2
+      core_fraction = 20
+    }
+  }
+}
+
+
 
 variable "each_vm" {
   type = list(object({
-    vm_name     = string
-    platform_id = string
-    cpu         = number
-    ram         = number
+    vm_name       = string
+    platform_id   = string
+    cpu           = number
+    ram           = number
     core_fraction = number
-    disk_volume = number
+    disk_volume   = number
   }))
   default = [
     { vm_name = "main", platform_id = "standard-v4a", cpu = 2, ram = 4, core_fraction = 20, disk_volume = 5 },

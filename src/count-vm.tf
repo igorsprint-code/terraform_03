@@ -1,18 +1,18 @@
 data "yandex_compute_image" "ubuntu" {
-  family = "ubuntu-2004-lts"
+  family = var.image
 }
 
 
 resource "yandex_compute_instance" "web" {
-  depends_on = [yandex_compute_instance.db] 
-  count       = 2
-  name        = "netology-develop-platform-web-${count.index + 1}"
-  platform_id = "standard-v4a"
-  hostname    = "netology-develop-platform-web-${count.index + 1}"
+  depends_on  = [yandex_compute_instance.db]
+  count       = var.web_count
+  name        = "${var.vm_web_name}-${count.index + 1}"
+  platform_id = var.vm_web_platform
+  hostname    = "${var.vm_web_name}-${count.index + 1}"
   resources {
-    cores         = 2
-    memory        = 2
-    core_fraction = 20
+    cores         = var.vms_resources["web"].cores
+    memory        = var.vms_resources["web"].memory
+    core_fraction = var.vms_resources["web"].core_fraction
   }
   boot_disk {
     initialize_params {
@@ -20,15 +20,15 @@ resource "yandex_compute_instance" "web" {
     }
   }
   scheduling_policy {
-    preemptible = true
+    preemptible = var.vm_web_preemptible
   }
   network_interface {
     subnet_id          = yandex_vpc_subnet.develop.id
-    nat                = true
+    nat                = var.vm_web_nat
     security_group_ids = [yandex_vpc_security_group.example.id]
   }
 
-  metadata = merge (var.metadata, {
+  metadata = merge(var.metadata, {
     ssh-keys = "ubuntu:${local.ssh_public}"
   })
 
