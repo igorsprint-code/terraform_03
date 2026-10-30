@@ -9,10 +9,9 @@ resource "yandex_compute_disk" "storage_disk" {
 
 
 resource "yandex_compute_instance" "storage" {
-  count       = var.storage_count
-  name        = "${var.storage_name}-${count.index + 1}"
+  name        = var.storage_name
   platform_id = var.storage_platform
-  hostname    = "${var.storage_name}-${count.index + 1}"
+  hostname    = var.storage_name
   resources {
     cores         = var.vms_resources["storage"].cores
     memory        = var.vms_resources["storage"].memory
